@@ -9,7 +9,33 @@ describe('User route handling', () => {
 });
 
 describe('Media route handling', () => {
-
+    describe('/api/media', () => {
+        describe('GET', () => {
+            it('Responds with status 200 and a json content type', (done) => {
+                return request(server)
+                    .get('/api/media/')
+                    .expect('Content-Type', /application\/json/)
+                    .expect(200, done)
+                    
+            })
+            it('Responds with the users media', (done) =>{
+                return request(server)
+                    .get('/api/media?userId=608873f69c69b5d1cc6f4dfd')
+                    .expect(200)
+                    .expect((err, res) => {
+                        console.log(res.locals)
+                        if(!Array.isArray(res.locals.media)) throw new Error ('Needs to Be Array of Media')
+                    })
+            })
+        })
+        xdescribe('POST', () => {
+            it('Responds with status 200 and a json content type', (done) => {
+                return request(server)
+                    .post('/api/media')
+                    .send()
+            })
+        })
+    })
 });
 
 // describe('Route integration', () => {
